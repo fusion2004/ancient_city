@@ -32,8 +32,7 @@ class PurchasesOrder
     add_line_item(trip, trip.price, 1)
     add_line_item(hotel, hotel.price, length_of_stay.to_i)
     activities.each { |a| add_line_item(a, a.price, 1) }
-    order.total_price_paid = order.order_line_items.map(&:extended_price).sum +
-      order.order_line_items.map(&:processing_fee).sum
+    order.total_price_paid = order.order_line_items.map(&:price_paid).sum
     order.save
   end
 
