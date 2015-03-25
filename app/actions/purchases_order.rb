@@ -2,9 +2,9 @@ class PurchasesOrder
 
   attr_accessor :length_of_stay
 
-  def initialize(trip_id, hotel_id, activity_ids, length_of_stay)
+  def initialize(trip_id, hotel_id, activity_ids, length_of_stay, coupon_code_code)
     @trip_id, @hotel_id, @activity_ids = trip_id, hotel_id, activity_ids
-    @length_of_stay = length_of_stay
+    @length_of_stay, @coupon_code_code = length_of_stay, coupon_code_code
   end
 
   def trip
@@ -23,8 +23,13 @@ class PurchasesOrder
     @order ||= Order.new
   end
 
+  def coupon_code
+    # TODO: check for set/unset instead of nil
+    @coupon_code ||= CouponCode.find_by(code: @coupon_code_code)
+  end
+
   def add_line_item(buyable, unit_price, amount)
-    line_item_params = OrderCalculation.for(buyable, unit_price, amount).params
+    line_item_params = OrderCalculation.for(buyable, unit_price, amount, coupon_code).params
     order.order_line_items.new(line_item_params)
   end
 
