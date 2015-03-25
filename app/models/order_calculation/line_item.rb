@@ -1,6 +1,6 @@
 module OrderCalculation
   class LineItem
-    attr_reader :buyable, :unit_price, :amount, :extended_price, :processing_fee
+    attr_reader :buyable, :unit_price, :amount, :extended_price
 
     def initialize(buyable, unit_price, amount)
       @buyable, @unit_price, @amount = buyable, unit_price, amount
