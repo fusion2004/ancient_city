@@ -9,20 +9,18 @@
 
     .length_of_stay Number of nights
     = hidden_field_tag :trip_id, @trip.id
-    = select_tag :length_of_stay,
-        options_for_select((1 .. (@trip.end_date - @trip.start_date)).to_a),
-        include_blank: true
+    = @trip.length_of_stay_select_tag
 
-    - @trip.hotels.each do |hotel|
-      %div[hotel]
-        = radio_button_tag(:hotel_id, hotel.id, false)
-        = "#{hotel.name}: #{hotel.description} (#{number_to_currency(hotel.price)})"
+    - @hotels.each do |hotel|
+      %div[hotel.__getobj__]
+        = hotel.booking_radio_button_tag
+        = hotel.short_description
 
     %h3 Activity Options
-    - @trip.activities.each do |activity|
-      %div[activity]
-        = check_box_tag(:"activity_id[]", activity.id, false, id: "activity_id_#{activity.id}")
-        = "#{activity.name}: #{activity.description} (#{number_to_currency(activity.price)})"
+    - @activities.each do |activity|
+      %div[activity.__getobj__]
+        = activity.booking_check_box_tag
+        = activity.short_description
 
     %br
   = f.submit "Order"

@@ -4,4 +4,8 @@ class Trip < ActiveRecord::Base
 
   monetize :price_cents
 
+  def length_of_stay
+    end_date - start_date
+  end
+
 end

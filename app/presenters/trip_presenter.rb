@@ -3,6 +3,8 @@ class TripPresenter < SimpleDelegator
   include ActionView::Helpers::UrlHelper
   include ActionView::Helpers::AssetTagHelper
   include ActionView::Helpers::NumberHelper
+  include ActionView::Helpers::FormTagHelper
+  include ActionView::Helpers::FormOptionsHelper
 
   def initialize(trip)
     super(trip)
@@ -23,4 +25,15 @@ class TripPresenter < SimpleDelegator
   def price_display
     number_to_currency(price)
   end
+
+  def length_of_stay_select_tag
+    select_tag :length_of_stay, length_of_stay_options, include_blank: true
+  end
+
+private
+
+  def length_of_stay_options
+    options_for_select((1 .. length_of_stay).to_a)
+  end
+
 end
